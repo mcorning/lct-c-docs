@@ -1,13 +1,21 @@
 # Local Contact Tracing Admin
 
+This page is for people in communities that want to do something that will ease the burden of a pandemic on their fellow citizens.
+
+## Why LCT?
+
 LCT works best when its users have a high probability of interacting. This is why LCT is called Local. For this reason, in the best case, each community or large organization should adminsiter their own LCT instance.
+
+## Make it happen
+
+Ok, so you are taking action. Here's what you need to do:
 
 The variables in the LCT architecture require configuration and administration:
 
 * Map
 * Graph
 
-We will use the example from the first installation of LCT in the US: Sisters, OR.
+We will show you what developers in Sisters, OR and the University of Manchester did to bring LCT to their local communities.
 
 ## Safe in Sisters
 
@@ -29,7 +37,7 @@ Again, the driving criterion is odds of interaction. At the University, there ar
 
 So, for example, LCT was developed and used by computer science students and teachers. Local was the set of classrooms used by computer science teachers. The map for LCT-UOM centers on the campus. The students configured their own RedisGraph database to store all the visits to computer science classrooms. If epidemiological data shows lower precedence of COVID among computer science students (including those students who do *not* use LCT themselves), then LCT can help lower incidence in the rest of the student body, *one academic discipline at a time*.
 
-## Why LCT, then?
+## That's Why 
 
 LCT is designed to minimize the time between:
 

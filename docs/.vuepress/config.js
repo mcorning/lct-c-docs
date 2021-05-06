@@ -1,7 +1,7 @@
 module.exports = {
-  title: 'Local Contact Tracing',
+  title: "Local Contact Tracing",
   description:
-    'A COVID-19 Early Warning System for small communities and large organizations.',
+    "A COVID-19 Early Warning System for small communities and large organizations.",
 
   /**
    * Extra tags to be injected to the page HTML `<head>`
@@ -9,11 +9,11 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/config/#head
    */
   head: [
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
-    ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+    ["meta", { name: "theme-color", content: "#3eaf7c" }],
+    ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
     [
-      'meta',
-      { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
+      "meta",
+      { name: "apple-mobile-web-app-status-bar-style", content: "black" },
     ],
   ],
   /**
@@ -22,29 +22,29 @@ module.exports = {
    * ref：https://v1.vuepress.vuejs.org/theme/default-theme-config.html
    */
   themeConfig: {
-    repo: '',
+    repo: "",
     editLinks: false,
-    docsDir: '',
-    editLinkText: '',
+    docsDir: "",
+    editLinkText: "",
     lastUpdated: false,
     nav: [
       {
-        text: 'Guide',
-        link: '/guide/',
+        text: "Guide",
+        link: "/guide/",
       },
       {
-        text: 'Spec',
-        link: '/spec/',
+        text: "Spec",
+        link: "/spec/",
       },
       {
-        text: 'Admin',
-        link: '/admin/',
+        text: "Admin",
+        link: "/admin/",
       },
       {
-        text: 'LCT-Sisters',
-        link: 'https://lct-c2.herokuapps.com',
+        text: "LCT-Sisters",
+        link: "https://lct-sisters.herokuapps.com",
       },
     ],
-    sidebar: 'auto',
+    sidebar: "auto",
   },
 };
