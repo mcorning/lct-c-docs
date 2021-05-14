@@ -29,22 +29,26 @@ module.exports = {
     lastUpdated: false,
     nav: [
       {
-        text: "Guide",
+        text: "Users",
         link: "/guide/",
       },
       {
-        text: "Spec",
+        text: "Devs",
         link: "/spec/",
       },
       {
-        text: "Admin",
+        text: "Admins",
         link: "/admin/",
       },
       {
+        text: "Policy",
+        link: "/policy/",
+      },
+      {
         text: "LCT-Sisters",
-        link: "https://lct-sisters.herokuapps.com",
+        link: "/sisters/",
       },
     ],
-    sidebar: "auto",
+    sidebar: ["/", "/guide/", "/spec/", "/admin/", "/policy/"],
   },
 };
