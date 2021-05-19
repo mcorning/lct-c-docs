@@ -34,27 +34,28 @@ module.exports = {
       },
       {
         text: "Devs",
+            prefix: "/spec/",
         items: [
           {
             text: "Introduction",
             items: [
-              { text: "Architecture", link: "/spec/Architecture/" },
-              { text: "Setup", link: "/spec/Setup/" },
-              { text: "Heroku", link: "/spec/Heroku/" },
+              { text: "Architecture", link: "Architecture/" },
+              { text: "Setup", link: "Setup/" },
+              { text: "Heroku", link: "Heroku/" },
             ],
           },
 
           {
             text: "Map Component",
             items: [
-              { text: "Map Overview", link: "/spec/MapOverview/" },
-              { text: "Map Details", link: "/spec/MapDetails/" },
+              { text: "Map Overview", link: "MapOverview/" },
+              { text: "Map Details", link: "MapDetails/" },
             ],
           },
           {
             text: "Calendar Component",
             items: [
-              { text: "Calendar Overview", link: "/spec/CalendarOverview/" },
+              { text: "Calendar Overview", link: "CalendarOverview/" },
             ],
           },
         ],
