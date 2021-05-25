@@ -44,11 +44,70 @@ The server sends a message to all visitors with possible exposure that they shou
 
 ## Data Categories
 
-The LCT client app has one major Javascript data structure. The LCT server uses several structures to monitor pending exposure alerts. The server calls on RedisGraph which is a directed acyclic graph or a [property graph](https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc).
+The LCT client app has two major Javascript data structures, Visit and Place. The LCT server uses several structures to monitor pending exposure alerts. The server calls on RedisGraph which is a directed acyclic graph or a [property graph](https://github.com/opencypher/openCypher/blob/master/docs/property-graph-model.adoc).
+
+Visitors can revisit the same place, so the first thing visitors track in the Map component is the place itself. Each visited place is an entity in the Place collection. The Visitor adds places over time. Deleting a visit has no effect on the Place collection. This means that if all the visits get deleted, the Recent Visits list will remember those past visits. This is especially useful for Gatherings (where they is no public name to the place) such as hiking or bike trips.
+
+On the Calendar, each visit to a place is unique in time. Each visit to the same place is different in time but not in space. Each visit points to a single record in the Place collection, so visits do not have to store any spatial data.
+
+On the Graph, each visit represents an edge (with temporal data) between two nodes: the visitor and the place. Each visit by the same visitor to the same place adds an arc to the graph. This way the graph can determine which visitors shared the same space at the same time.
+
+### Place Collection
+
+The Place collection receives a record each time:
+
+1) the visitor selects a new place on the map
+2) then chooses to mark the visit on their calendar
+
+::: warning
+If the visitor merely clicks the map alone, no place is added to the collection until they use the place to mark their calendar.
+:::
+
+Each place in the collection consists in these properties:
+
+```js
+  static fields() {
+    return {
+      // From Map component (for the graph component (calendar uses only name))
+      // we are using googlemaps property names to eliminate naming errors
+      name: this.string(''), // POI or "Gathering" name
+      formatted_address: this.string(''), // Street address (if available)
+      place_id: this.string(''), // Unique ID of space or place
+      plus_code: this.string(''), // Global address string
+      lat: this.number(), // Latitude of visited space/place
+      lng: this.number(), // Longitude of visited space/place
+    };
+  }
+```
+
+As visitors use LCT, they are building a personal map they can use and reuse (even when the map is *not available online*).
+
+The Place collection is unchanged if a visitor *revisits* the same place. When marking the calendar a new visit uses an old place_id.
+
+::: tip Note
+There is no personally identifying information stored in the Place collection. One can only imply the association of a place with a person because the data is on a personal device (the device owner may not be the person who added the Place to the collection).
+:::
+
+Past visits appear on the Map component two ways:
+
+* As unique entries in the list behind the `Recent Visits` button
+* As `markers` on the map (if the map is online)
+
+::: warning
+The only way to delete a marker is to delete from the calendar *all* visits to that place.
+:::
+
+Markers on the Map component indicate the location of a visit. On Google maps, markers consist in the following data:
+
+::: tip Note
+LCT uses vue2-google-maps component. This component includes a marker component. The marker component has a markers array property. If you add an element to that array, the component creates the marker. LCT does not issue a call directly to the googlemaps marker API.
+:::
 
 ### Visit Collection
 
-The LCT client stores the following data in Web Storate on the visitor's device:
+Visits on the Calendar component indicate the temporal value that complements the location of the visit. 
+
+The LCT client stores the following data in Web Storage on the visitor's device:
 
 ```js
 export default class Visit extends Model {
@@ -58,11 +117,9 @@ export default class Visit extends Model {
     return {
       id: this.attr(null), // Unique generated value
 
-      // From Map component (for the graph component (calendar uses only name))
+      // From Map component markers' tag object (for the graph component (calendar uses only name))
       name: this.string(''), // POI or "Gathering"
       placeId: this.string(''), // Unique ID of space or place
-      lat: this.number(), // Latitude of Visit space/place
-      lng: this.number(), // Longitude of Visit space/place
 
       // From Calendar component
       marked: this.string(''), // DateTime Visit made it to the calendar
@@ -128,8 +185,8 @@ The exposure graph needs minimal data for the exposure alert protocol:
 
 ```
 
-::: tip
-Note that most of the data in the exposure graph is not needed for the alerting protocol. The current version of LCT stores the data only to aid in debugging. Once the graph traversal algorithm is judged reliable, we will no longer store the developer-friendly data in the graph
+::: warning
+Most of the data in the exposure graph is not needed for the alerting protocol. The current version of LCT stores the data only to aid in debugging. Once the graph traversal algorithm is judged reliable, we will no longer store the developer-friendly data in the graph
 :::
 
 ## Data Sharing
